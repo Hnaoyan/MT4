@@ -4,6 +4,7 @@
 #include "Matrix4x4.h"
 #include "VectorLib.h"
 #include "MatLib.h"
+#include "QuatLib.h"
 
 class MathCalc
 {

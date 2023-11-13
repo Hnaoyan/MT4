@@ -50,6 +50,9 @@
     <ClCompile Include="VectorLib.cpp">
       <Filter>KamataEngine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="QuatLib.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -132,5 +135,6 @@
     <ClInclude Include="VectorLib.h">
       <Filter>KamataEngine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="QuatLib.h" />
   </ItemGroup>
 </Project>

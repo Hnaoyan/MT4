@@ -17,6 +17,14 @@ void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label
 	}
 }
 
+void QuaternionPrintf(int x, int y, const Quaternion quaternion, const char* label) {
+	Novice::ScreenPrintf(x, y, "%s", label);
+	float ray[4] = { quaternion.x,quaternion.y,quaternion.z,quaternion.w };
+	for (int column = 0; column < 4; ++column) {
+		Novice::ScreenPrintf(int(x + column * kColumnWidth), int(y + kRowHeight), "%6.02f", ray[column]);
+	}
+}
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -27,14 +35,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
-	Vector3 from0 = MathCalc::Normalize(Vector3{ 1.0f,0.7f,0.5f });
-	Vector3 to0 = VectorLib::Scaler(from0, -1.0f);
-	Vector3 from1 = MathCalc::Normalize(Vector3{ -0.6f,0.9f,0.2f });
-	Vector3 to1 = MathCalc::Normalize(Vector3{ 0.4f,0.7f,-0.5f });
-	Matrix4x4 rotateMat0 = MatLib::DirectionToDirection(MathCalc::Normalize(Vector3{ 1.0f,0.0f,0.0f }), MathCalc::Normalize(Vector3{ -1.0f,0.0f,0.0f }));
-	Matrix4x4 rotateMat1 = MatLib::DirectionToDirection(from0, to0);
-	Matrix4x4 rotateMat2 = MatLib::DirectionToDirection(from1, to1);
-
+	Quaternion q1 = { 2.0f,3.0f,4.0f,1.0f };
+	Quaternion q2 = { 1.0f,3.0f,5.0f,2.0f };
+	Quaternion identity = QuatLib::IdentityQuaternion();
+	Quaternion conj = QuatLib::Conjugate(q1);
+	Quaternion inv = QuatLib::Inverse(q1);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -49,9 +54,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-		MatrixScreenPrintf(0, 0, rotateMat0, "rotate0");
-		MatrixScreenPrintf(0, kRowHeight * 5, rotateMat1, "rotate1");
-		MatrixScreenPrintf(0, kRowHeight * 10, rotateMat2, "rotate2");
 
 		///
 		/// ↑更新処理ここまで
@@ -60,6 +62,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+
+		QuaternionPrintf(0, 0, inv, "Inverse");
 
 		///
 		/// ↑描画処理ここまで

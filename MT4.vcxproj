@@ -118,6 +118,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathCalc.cpp" />
     <ClCompile Include="MatLib.cpp" />
+    <ClCompile Include="QuatLib.cpp" />
     <ClCompile Include="VectorLib.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="MathCalc.h" />
     <ClInclude Include="MatLib.h" />
+    <ClInclude Include="QuatLib.h" />
     <ClInclude Include="VectorLib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
