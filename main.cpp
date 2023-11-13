@@ -27,9 +27,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
-	Vector3 axis = MathCalc::Normalize(Vector3{ 1.0f,1.0f,1.0f });
-	float angle = 0.44f;
-	Matrix4x4 rotateMatrix = MatLib::MakeRotateAxisAngle(axis, angle);
+	Vector3 from0 = MathCalc::Normalize(Vector3{ 1.0f,0.7f,0.5f });
+	Vector3 to0 = VectorLib::Scaler(from0, -1.0f);
+	Vector3 from1 = MathCalc::Normalize(Vector3{ -0.6f,0.9f,0.2f });
+	Vector3 to1 = MathCalc::Normalize(Vector3{ 0.4f,0.7f,-0.5f });
+	Matrix4x4 rotateMat0 = MatLib::DirectionToDirection(MathCalc::Normalize(Vector3{ 1.0f,0.0f,0.0f }), MathCalc::Normalize(Vector3{ -1.0f,0.0f,0.0f }));
+	Matrix4x4 rotateMat1 = MatLib::DirectionToDirection(from0, to0);
+	Matrix4x4 rotateMat2 = MatLib::DirectionToDirection(from1, to1);
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -44,7 +49,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-		MatrixScreenPrintf(0, 0, rotateMatrix, "rotate");
+		MatrixScreenPrintf(0, 0, rotateMat0, "rotate0");
+		MatrixScreenPrintf(0, kRowHeight * 5, rotateMat1, "rotate1");
+		MatrixScreenPrintf(0, kRowHeight * 10, rotateMat2, "rotate2");
 
 		///
 		/// ↑更新処理ここまで
