@@ -1,6 +1,21 @@
 #include <Novice.h>
+#include "MathCalc.h"
 
 const char kWindowTitle[] = "学籍番号";
+
+const int kColumnWidth = 60;
+const int kRowHeight = 20;
+
+void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
+	Novice::ScreenPrintf(x, y, "%s", label);
+	for (int row = 0; row < 4; ++row) {
+		for (int column = 0; column < 4; ++column) {
+			Novice::ScreenPrintf(
+				int(x + column * kColumnWidth), int(y + (row + 1) * kRowHeight), "%6.03f", matrix.m[row][column]
+			);
+		}
+	}
+}
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -11,6 +26,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	Vector3 axis = MathCalc::Normalize(Vector3{ 1.0f,1.0f,1.0f });
+	float angle = 0.44f;
+	Matrix4x4 rotateMatrix = MatLib::MakeRotateAxisAngle(axis, angle);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -24,6 +43,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
+
+		MatrixScreenPrintf(0, 0, rotateMatrix, "rotate");
 
 		///
 		/// ↑更新処理ここまで

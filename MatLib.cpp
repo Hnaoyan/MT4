@@ -359,6 +359,18 @@ Matrix4x4 MatLib::DirectionToDirection(const Vector3& from, const Vector3& to)
 
 Matrix4x4 MatLib::MakeRotateAxisAngle(const Vector3& axis, float angle)
 {
-	axis, angle;
-	return Matrix4x4();
+	Matrix4x4 rotation = MakeIdentity4x4();
+	rotation.m[0][0] = std::powf(axis.x, 2) * (1 - std::cosf(angle)) + std::cosf(angle);
+	rotation.m[0][1] = axis.x * axis.y * (1 - std::cosf(angle)) + (axis.z * std::sinf(angle));
+	rotation.m[0][2] = axis.x * axis.z * (1 - std::cosf(angle)) - (axis.y * std::sinf(angle));
+
+	rotation.m[1][0] = axis.x * axis.y * (1 - std::cosf(angle)) - (axis.z * std::sinf(angle));
+	rotation.m[1][1] = std::powf(axis.y, 2) * (1 - std::cosf(angle)) + (std::cosf(angle));
+	rotation.m[1][2] = axis.y * axis.z * (1 - std::cosf(angle)) + (axis.x * std::sinf(angle));
+
+	rotation.m[2][0] = axis.x * axis.z * (1 - std::cosf(angle)) + (axis.y * std::sinf(angle));
+	rotation.m[2][1] = axis.y * axis.z * (1 - std::cosf(angle)) - (axis.x * std::sinf(angle));
+	rotation.m[2][2] = std::powf(axis.z, 2) * (1 - std::cosf(angle)) + std::cosf(angle);
+
+	return rotation;
 }
