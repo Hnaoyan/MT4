@@ -40,6 +40,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Quaternion identity = QuatLib::IdentityQuaternion();
 	Quaternion conj = QuatLib::Conjugate(q1);
 	Quaternion inv = QuatLib::Inverse(q1);
+	Quaternion normalize = QuatLib::Normalize(q1);
+	Quaternion mul1 = QuatLib::Multiply(q1, q2);
+	Quaternion mul2 = QuatLib::Multiply(q2, q1);
+	float norm = QuatLib::Norm(q1);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -63,7 +67,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		QuaternionPrintf(0, 0, inv, "Inverse");
+		QuaternionPrintf(0, 0, identity, "Identity");
+		QuaternionPrintf(0, kRowHeight * 3, conj, "Conjugate");
+		QuaternionPrintf(0, kRowHeight * 3 * 2, inv, "Inverse");
+		QuaternionPrintf(0, kRowHeight * 3 * 3, normalize, "Normalize");
+		QuaternionPrintf(0, kRowHeight * 3 * 4, mul1, "Multiply1");
+		QuaternionPrintf(0, kRowHeight * 3 * 5, mul2, "Multiply2");
+		Novice::ScreenPrintf(0, kRowHeight * 3 * 6, "Norm : %6.02f", norm);
 
 		///
 		/// ↑描画処理ここまで

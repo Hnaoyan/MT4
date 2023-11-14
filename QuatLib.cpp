@@ -6,7 +6,9 @@ Quaternion QuatLib::Multiply(const Quaternion& lhs, const Quaternion& rhs)
     Quaternion result = {};
     result.w = lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z;
     result.x = lhs.y * rhs.z - lhs.z * rhs.y + rhs.w * lhs.x + lhs.w * rhs.x;
-    return Quaternion();
+    result.y = lhs.z * rhs.x - lhs.x * rhs.z + rhs.w * lhs.y + lhs.w * rhs.y;
+    result.z = lhs.x * rhs.y - rhs.x * lhs.y + rhs.w * lhs.z + lhs.w * rhs.z;
+    return result;
 }
 
 Quaternion QuatLib::IdentityQuaternion()
