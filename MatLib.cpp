@@ -382,3 +382,27 @@ Matrix4x4 MatLib::MakeRotateAxisAngle(const Vector3& axis, float angle)
 
 	return rotation;
 }
+
+Matrix4x4 MatLib::MakeRotateMatrix(const Quaternion& quaternion)
+{
+	Matrix4x4 result = MakeIdentity4x4();
+	result.m[0][0] = std::powf(quaternion.w, 2) + std::powf(quaternion.x, 2) - std::powf(quaternion.y, 2) - std::powf(quaternion.z, 2);
+	result.m[0][1] = 2 * (quaternion.x * quaternion.y + quaternion.w * quaternion.z);
+	result.m[0][2] = 2 * (quaternion.x * quaternion.z - quaternion.w * quaternion.y);
+	result.m[1][0] = 2 * (quaternion.x * quaternion.y - quaternion.w * quaternion.z);
+	result.m[1][1] = std::powf(quaternion.w, 2) - std::powf(quaternion.x, 2) + std::powf(quaternion.y, 2) - std::powf(quaternion.z, 2);
+	result.m[1][2] = 2 * (quaternion.y * quaternion.z + quaternion.w * quaternion.x);
+	result.m[2][0] = 2 * (quaternion.x * quaternion.z + quaternion.w * quaternion.y);
+	result.m[2][1] = 2 * (quaternion.y * quaternion.z - quaternion.w * quaternion.x);
+	result.m[2][2] = std::powf(quaternion.w, 2) - std::powf(quaternion.x, 2) - std::powf(quaternion.y, 2) + std::powf(quaternion.z, 2);
+	return result;
+}
+
+Vector3 MatLib::RotateVector(const Vector3& vector, const Quaternion& quaternion)
+{
+	Vector3 result = {};
+	result.x = vector.x * quaternion.x;
+	result.y = vector.y * quaternion.y;
+	result.z = vector.z * quaternion.z;
+	return result;
+}

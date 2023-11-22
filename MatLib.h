@@ -2,6 +2,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Matrix4x4.h"
+#include "QuatLib.h"
 
 class MatLib
 {
@@ -110,5 +111,20 @@ public:
 	/// <param name="angle"></param>
 	/// <returns></returns>
 	static Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
+	
+	/// <summary>
+	/// クォータニオンから回転行列の作成
+	/// </summary>
+	/// <param name="quaternion"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion);
+
+	/// <summary>
+	/// ベクトルをクォータニオンで回転させる関数
+	/// </summary>
+	/// <param name="vector"></param>
+	/// <param name="quaternion"></param>
+	/// <returns></returns>
+	static Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 
 };

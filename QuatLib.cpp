@@ -1,5 +1,6 @@
 ﻿#include "QuatLib.h"
 #include <cmath>
+#include <numbers>
 
 Quaternion QuatLib::Multiply(const Quaternion& lhs, const Quaternion& rhs)
 {
@@ -54,5 +55,15 @@ Quaternion QuatLib::Inverse(const Quaternion& quaternion)
     }
 
     //Quaternion
+    return result;
+}
+
+Quaternion QuatLib::MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
+{
+    Quaternion result = {};
+    result.w = std::cosf(angle / 2.0f);
+    result.x = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.x;
+    result.y = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.y;
+    result.z = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.z;
     return result;
 }

@@ -25,6 +25,14 @@ void QuaternionPrintf(int x, int y, const Quaternion quaternion, const char* lab
 	}
 }
 
+void VectorScreenPrintf(int x, int y, const Vector3 vector, const char* label) {
+	Novice::ScreenPrintf(x, y, "%s", label);
+	float ray[3] = { vector.x,vector.y,vector.z };
+	for (int column = 0; column < 3; ++column) {
+		Novice::ScreenPrintf(int(x + column * kColumnWidth), int(y + kRowHeight), "%6.02f", ray[column]);
+	}
+}
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -35,15 +43,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
-	Quaternion q1 = { 2.0f,3.0f,4.0f,1.0f };
-	Quaternion q2 = { 1.0f,3.0f,5.0f,2.0f };
-	Quaternion identity = QuatLib::IdentityQuaternion();
-	Quaternion conj = QuatLib::Conjugate(q1);
-	Quaternion inv = QuatLib::Inverse(q1);
-	Quaternion normalize = QuatLib::Normalize(q1);
-	Quaternion mul1 = QuatLib::Multiply(q1, q2);
-	Quaternion mul2 = QuatLib::Multiply(q2, q1);
-	float norm = QuatLib::Norm(q1);
+	Quaternion rotation =
+		QuatLib::MakeRotateAxisAngleQuaternion(MathCalc::Normalize({ 1.0f,0.4f,-0.2f }), 0.45f);
+	Vector3 pointY = { 2.1f,-0.9f,1.3f };
+
+	Matrix4x4 rotateMat = MatLib::MakeRotateMatrix(rotation);
+	
+	Vector3 rotateByQuat = MatLib::RotateVector(pointY, rotation);
+	Vector3 rotateByMatrix = MatLib::Transform(pointY, rotateMat);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -67,13 +74,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		QuaternionPrintf(0, 0, identity, "Identity");
-		QuaternionPrintf(0, kRowHeight * 3, conj, "Conjugate");
-		QuaternionPrintf(0, kRowHeight * 3 * 2, inv, "Inverse");
-		QuaternionPrintf(0, kRowHeight * 3 * 3, normalize, "Normalize");
-		QuaternionPrintf(0, kRowHeight * 3 * 4, mul1, "Multiply1");
-		QuaternionPrintf(0, kRowHeight * 3 * 5, mul2, "Multiply2");
-		Novice::ScreenPrintf(0, kRowHeight * 3 * 6, "Norm : %6.02f", norm);
+		QuaternionPrintf(0, kRowHeight * 0, rotation, "rotation");
+
+		MatrixScreenPrintf(0, kRowHeight * 3, rotateMat, "matrix");
+
+		VectorScreenPrintf(0, kRowHeight * 9, rotateByQuat, "ByQuat");
+		VectorScreenPrintf(0, kRowHeight * 11, rotateByMatrix, "ByMatrix");
 
 		///
 		/// ↑描画処理ここまで

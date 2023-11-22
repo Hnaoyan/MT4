@@ -108,24 +108,6 @@ float MathCalc::LerpShortAngle(float a, float b, float t)
 	diff = std::fmodf(diff + (float(std::numbers::pi)), 2.0f * (float(std::numbers::pi))) - (float(std::numbers::pi));
 	diff = Lerp(a, diff, t);
 	return diff;
-	// // 角度差分
-	//float diff = b - a;
-
-	//// 角度を正規化
-	//while (diff >= 360.0f) {
-	//	diff -= 360.0f;
-	//}
-	//while (diff < 0.0f) {
-	//	diff += 360.0f;
-	//}
-
-	//// 補間率を0から1の範囲に制約
-	//t = std::clamp(t, 0.0f, 1.0f);
-
-	//// 角度を補間
-	//diff = Lerp(a, a + diff, t);
-
-	//return diff;
 }
 
 #pragma region イージング計算
