@@ -21,6 +21,10 @@ public: // 基本的な計算
 	// 逆
 	static Quaternion Inverse(const Quaternion& quaternion);
 
+	static float Dot(const Quaternion& q0, const Quaternion& q1);
+
+	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+
 public:
 	
 	/// <summary>

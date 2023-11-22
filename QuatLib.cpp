@@ -58,6 +58,11 @@ Quaternion QuatLib::Inverse(const Quaternion& quaternion)
     return result;
 }
 
+Quaternion QuatLib::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
+{
+    return Quaternion();
+}
+
 Quaternion QuatLib::MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
 {
     Quaternion result = {};
