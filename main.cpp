@@ -43,14 +43,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
-	Quaternion rotation =
-		QuatLib::MakeRotateAxisAngleQuaternion(MathCalc::Normalize({ 1.0f,0.4f,-0.2f }), 0.45f);
-	Vector3 pointY = { 2.1f,-0.9f,1.3f };
 
-	Matrix4x4 rotateMat = MatLib::MakeRotateMatrix(rotation);
-	
-	Vector3 rotateByQuat = MatLib::RotateVector(pointY, rotation);
-	Vector3 rotateByMatrix = MatLib::Transform(pointY, rotateMat);
+	Quaternion rotation0 = QuatLib::MakeRotateAxisAngleQuaternion({ 0.71f,0.71f,0.0f }, 0.3f);
+	Quaternion rotation1 = QuatLib::MakeRotateAxisAngleQuaternion({ 0.71f,0.0f,0.71f }, 3.141592f);
+
+	Quaternion interpolate0 = QuatLib::Slerp(rotation0, rotation1, 0.0f);
+	Quaternion interpolate1 = QuatLib::Slerp(rotation0, rotation1, 0.3f);
+	Quaternion interpolate2 = QuatLib::Slerp(rotation0, rotation1, 0.5f);
+	Quaternion interpolate3 = QuatLib::Slerp(rotation0, rotation1, 0.7f);
+	Quaternion interpolate4 = QuatLib::Slerp(rotation0, rotation1, 1.0f);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -74,12 +75,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		QuaternionPrintf(0, kRowHeight * 0, rotation, "rotation");
-
-		MatrixScreenPrintf(0, kRowHeight * 3, rotateMat, "matrix");
-
-		VectorScreenPrintf(0, kRowHeight * 9, rotateByQuat, "ByQuat");
-		VectorScreenPrintf(0, kRowHeight * 11, rotateByMatrix, "ByMatrix");
+		QuaternionPrintf(0, kRowHeight * 0, interpolate0, "interpolate0");
+		QuaternionPrintf(0, kRowHeight * 2, interpolate1, "interpolate1");
+		QuaternionPrintf(0, kRowHeight * 4, interpolate2, "interpolate2");
+		QuaternionPrintf(0, kRowHeight * 6, interpolate3, "interpolate3");
+		QuaternionPrintf(0, kRowHeight * 8, interpolate4, "interpolate4");
 
 		///
 		/// ↑描画処理ここまで

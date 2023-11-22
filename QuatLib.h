@@ -25,6 +25,10 @@ public: // 基本的な計算
 
 	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 
+	static Quaternion Scaler(const Quaternion& q, float scaler);
+
+	static Quaternion Add(const Quaternion& q0, const Quaternion& q1);
+
 public:
 	
 	/// <summary>
